@@ -7,7 +7,7 @@
 * 使用 Zepp Life 账号密码登录
 * 自动获取 `login_token`
 * 自动获取 `app_token`
-* 修改当天运动步数
+* 修改当天运动步数（默认随机生成 25000-50000 步）
 * 支持通过 `.env` 配置账号信息
 * 使用 `uv` 管理 Python 依赖
 
@@ -71,7 +71,7 @@ uv sync
 ```env
 ZEEP_ACCOUNT=your_account
 ZEEP_PASSWORD=your_password
-ZEEP_STEPS=66666
+ZEEP_STEPS=30000
 ```
 
 参数说明：
@@ -80,7 +80,17 @@ ZEEP_STEPS=66666
 | --------------- | --------------------- |
 | `ZEEP_ACCOUNT`  | Zepp Life 注册账号  |
 | `ZEEP_PASSWORD` | Zepp Life 账号密码        |
-| `ZEEP_STEPS`    | 修改后的目标步数（可选，默认 66666） |
+| `ZEEP_STEPS`    | 修改后的目标步数（可选，不设置时随机生成 25000-50000 步） |
+
+说明：
+
+如果不设置 `ZEEP_STEPS`，程序会自动随机生成当天步数：
+
+```python
+random.randint(25000, 50000)
+```
+
+每次运行都会生成不同的步数。
 
 注意：
 
@@ -96,7 +106,7 @@ ZEEP_STEPS=66666
 ```env
 ZEEP_ACCOUNT=your_account
 ZEEP_PASSWORD=your_password
-ZEEP_STEPS=66666
+ZEEP_STEPS=30000
 ```
 
 ---
@@ -154,7 +164,7 @@ python main.py
 运行成功示例：
 
 ```
-账号: your_account, 目标步数: 66666
+账号: your_account, 目标步数: 38241
 登录成功
 获取Token成功，User ID=xxxxxxxx
 获取app_token成功

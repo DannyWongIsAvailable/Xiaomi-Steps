@@ -1,4 +1,5 @@
 import os
+import random
 from dotenv import load_dotenv
 
 from xiaomi_steps import login, get_app_token, change_steps
@@ -9,7 +10,7 @@ def main():
 
     account = os.environ["XIAOMI_ACCOUNT"]
     password = os.environ["XIAOMI_PASSWORD"]
-    steps = int(os.environ.get("XIAOMI_STEPS", "66666"))
+    steps = int(os.environ["XIAOMI_STEPS"]) if "XIAOMI_STEPS" in os.environ else random.randint(25000, 50000)
 
     print(f"账号: {account}, 目标步数: {steps}")
 
