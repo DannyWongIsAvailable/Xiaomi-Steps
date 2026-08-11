@@ -1,15 +1,36 @@
-# Xiaomi Steps
+# Zepp Life Steps
 
-一个基于 Python 的小米运动（Zepp Life）步数修改工具。
+一个基于 Python 的 Zepp Life（原小米运动）步数修改工具。
 
 ## 功能
 
-* 使用小米账号登录
+* 使用 Zepp Life 账号密码登录
 * 自动获取 `login_token`
 * 自动获取 `app_token`
 * 修改当天运动步数
-* 支持通过 `.env` 配置账号信息，不需要修改源码
-* 使用 `uv` 管理依赖
+* 支持通过 `.env` 配置账号信息
+* 使用 `uv` 管理 Python 依赖
+
+---
+
+## 重要说明
+
+本工具使用的是 **Zepp Life 账号**，不是小米账号。
+
+由于 Zepp Life 的登录接口需要账号密码验证，因此：
+
+* 不支持微信、Apple、手机系统等一键登录方式
+* 必须注册一个 Zepp Life 账号，并使用账号密码登录
+* 推荐使用邮箱注册 Zepp Life 账号
+
+例如：
+
+```
+账号：your_account
+密码：your_password
+```
+
+注册完成后，将该账号信息配置到 `.env` 文件中。
 
 ---
 
@@ -48,27 +69,34 @@ uv sync
 在项目根目录创建 `.env` 文件：
 
 ```env
-XIAOMI_ACCOUNT=your_account
-XIAOMI_PASSWORD=your_password
-XIAOMI_STEPS=66666
+ZEEP_ACCOUNT=your_account
+ZEEP_PASSWORD=your_password
+ZEEP_STEPS=66666
 ```
 
 参数说明：
 
-| 变量                | 说明                    |
-| ----------------- | --------------------- |
-| `XIAOMI_ACCOUNT`  | 小米账号（手机号或邮箱）          |
-| `XIAOMI_PASSWORD` | 小米账号密码                |
-| `XIAOMI_STEPS`    | 修改后的目标步数（可选，默认 66666） |
+| 变量              | 说明                    |
+| --------------- | --------------------- |
+| `ZEEP_ACCOUNT`  | Zepp Life 注册账号  |
+| `ZEEP_PASSWORD` | Zepp Life 账号密码        |
+| `ZEEP_STEPS`    | 修改后的目标步数（可选，默认 66666） |
 
-为了避免泄露账号密码，请不要将 `.env` 提交到 Git。
+注意：
 
-建议保留一个 `.env.example`：
+* 请勿将 `.env` 文件提交到 GitHub
+* `.env` 文件包含账号密码等敏感信息
+
+建议保留：
+
+`.env.example`
+
+示例：
 
 ```env
-XIAOMI_ACCOUNT=your@email.com
-XIAOMI_PASSWORD=your_password
-XIAOMI_STEPS=66666
+ZEEP_ACCOUNT=your_account
+ZEEP_PASSWORD=your_password
+ZEEP_STEPS=66666
 ```
 
 ---
@@ -87,11 +115,25 @@ XIAOMI_STEPS=66666
 └── .venv/
 ```
 
-其中：
+说明：
 
-* `main.py`：程序入口，负责读取环境变量并执行流程。
-* `xiaomi_steps.py`：核心业务逻辑，包括登录、获取 Token、修改步数等。
-* `.env`：保存账号及配置（不会提交到 Git）。
+* `main.py`
+
+  * 程序入口
+  * 读取环境变量
+  * 调用核心功能
+
+* `xiaomi_steps.py`
+
+  * 核心业务逻辑
+  * Zepp Life 登录
+  * Token 获取
+  * 步数修改
+
+* `.env`
+
+  * 保存账号配置
+  * 不提交到 Git
 
 ---
 
@@ -103,16 +145,16 @@ XIAOMI_STEPS=66666
 uv run main.py
 ```
 
-也可以：
+或者：
 
 ```bash
 python main.py
 ```
 
-运行成功后示例输出：
+运行成功示例：
 
 ```
-账号: your@email.com, 目标步数: 66666
+账号: your_account, 目标步数: 66666
 登录成功
 获取Token成功，User ID=xxxxxxxx
 获取app_token成功
@@ -125,17 +167,25 @@ python main.py
 
 ### 登录失败
 
-请确认：
+请检查：
 
-* 账号或密码是否正确
+* 是否使用 Zepp Life 注册账号
+* 是否填写正确的账号密码
+* 是否误用了小米账号登录方式
 * 网络是否正常
-* 是否触发了接口访问频率限制
+* 是否触发接口访问频率限制
 
 ---
 
-### 提示获取 Token 失败
+### 获取 Token 失败
 
-通常是账号登录状态异常或接口变更导致，可稍后重试。
+可能原因：
+
+* 账号登录状态异常
+* Zepp Life 接口发生变化
+* 网络请求失败
+
+建议稍后重新运行。
 
 ---
 
@@ -143,15 +193,15 @@ python main.py
 
 请确认：
 
-* 账号能够正常登录 Zepp Life（小米运动）
-* 当天已有运动数据
+* Zepp Life 账号可以正常登录
+* `.env` 中账号密码正确
 * 网络连接正常
 
 ---
 
 ## 开发
 
-安装新增依赖：
+添加依赖：
 
 ```bash
 uv add <package>
@@ -163,7 +213,7 @@ uv add <package>
 uv sync
 ```
 
-更新依赖：
+更新锁文件：
 
 ```bash
 uv lock
@@ -173,6 +223,8 @@ uv lock
 
 ## 免责声明
 
-本项目仅供学习与技术研究使用。
+本项目仅用于学习和技术研究。
 
-请遵守相关平台的服务协议，不得将本项目用于任何违反法律法规或平台规则的用途。因使用本项目造成的任何后果，由使用者自行承担。
+请遵守 Zepp Life 平台相关服务协议，不得将本项目用于违反平台规则或法律法规的用途。
+
+因使用本项目产生的任何后果，由使用者自行承担。
