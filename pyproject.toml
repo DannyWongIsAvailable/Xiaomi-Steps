@@ -1,0 +1,14 @@
+[project]
+name = "Xiaomi-Steps"
+version = "0.1.0"
+description = "一个基于 Python 的小米运动（Zepp Life）步数修改工具。"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "python-dotenv>=1.2.2",
+    "requests>=2.34.2",
+]
+
+[[tool.uv.index]]
+url = "https://pypi.tuna.tsinghua.edu.cn/simple/"
+default = true
